@@ -2031,6 +2031,9 @@ class PullRequest {
     }
     addReviewers(reviewers, team_reviewers) {
         return __awaiter(this, void 0, void 0, function* () {
+            core.debug(JSON.stringify(
+              yield this.client.teams.list({org: 'tildabio'})
+            ))
             const { owner, repo, number: pull_number } = this.context.issue;
             const result = yield this.client.pulls.createReviewRequest({
                 owner,
