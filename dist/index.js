@@ -2029,7 +2029,7 @@ class PullRequest {
         this.client = client;
         this.context = context;
     }
-    addReviewers(reviewers) {
+    addReviewers(reviewers, team_reviewers) {
         return __awaiter(this, void 0, void 0, function* () {
             const { owner, repo, number: pull_number } = this.context.issue;
             const result = yield this.client.pulls.createReviewRequest({
@@ -2037,6 +2037,7 @@ class PullRequest {
                 repo,
                 pull_number,
                 reviewers,
+                team_reviewers,
             });
             core.debug(JSON.stringify(result));
         });
@@ -25915,7 +25916,7 @@ function handlePullRequest(client, context, config) {
         if (addReviewers) {
             try {
                 const reviewers = utils.chooseReviewers(owner, config);
-                const team_reviewers = reviewers.filter(reviewer => reviewer.includes('/'));
+                const team_reviewers = reviewers.filter(reviewer => reviewer.includes('/')).map(reviewer => reviewer.replace(/.*\//, ""));
                 if (reviewers.length > 0) {
                     yield pr.addReviewers(reviewers, team_reviewers);
                     core.info(`Owener of PR #${number}: ${owner}`);
