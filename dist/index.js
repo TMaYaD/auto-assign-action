@@ -25917,7 +25917,7 @@ function handlePullRequest(client, context, config) {
             try {
                 const reviewers = utils.chooseReviewers(owner, config);
                 const team_reviewers = reviewers.filter(reviewer => reviewer.includes('/')).map(reviewer => reviewer.replace(/.*\//g, ""));
-                core.info(`Added team reviewers to PR #${number}: ${team_reviewers}`);
+                core.info(`Added team reviewers to PR #${number}: ${JSON.stringify(team_reviewers)}`);
                 if (reviewers.length > 0) {
                     yield pr.addReviewers(reviewers, team_reviewers);
                     core.info(`Owener of PR #${number}: ${owner}`);
