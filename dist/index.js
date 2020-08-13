@@ -25917,6 +25917,7 @@ function handlePullRequest(client, context, config) {
                 const reviewers = utils.chooseReviewers(owner, config);
                 if (reviewers.length > 0) {
                     yield pr.addReviewers(reviewers);
+                    core.info(`Owener of PR #${number}: ${owner}`);
                     core.info(`Added reviewers to PR #${number}: ${reviewers.join(', ')}`);
                 }
             }
